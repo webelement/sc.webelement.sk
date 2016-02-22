@@ -1,0 +1,1003 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="utf-8">
+  <title>Webelement #12 :: Nepoznané funkcie jQuery</title>
+
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/reveal-beige.css" id="theme">
+  <link rel="stylesheet" href="css/zenburn.css">
+  <style>
+    .btn {
+      -moz-border-bottom-colors: none;
+      -moz-border-left-colors: none;
+      -moz-border-right-colors: none;
+      -moz-border-top-colors: none;
+      background-color: #F5F5F5;
+      background-image: -moz-linear-gradient(center top , #FFFFFF, #E6E6E6);
+      background-repeat: repeat-x;
+      border-color: #E6E6E6 #E6E6E6 #A2A2A2;
+      border-image: none;
+      border-radius: 4px 4px 4px 4px;
+      border-style: solid;
+      border-width: 1px;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+      color: #333333;
+      cursor: pointer;
+      display: inline-block;
+      font-size: 14px;
+      line-height: 20px;
+      margin-bottom: 0;
+      padding: 4px 14px;
+      text-align: center;
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+      vertical-align: middle;
+    }
+    .btn-large {
+      border-radius: 5px 5px 5px 5px;
+      font-size: 16px;
+      line-height: normal;
+      padding: 9px 14px;
+    }
+    .btn-info {
+      background-color: #49AFCD;
+      background-image: -moz-linear-gradient(center top , #5BC0DE, #2F96B4);
+      background-repeat: repeat-x;
+      border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+      color: #FFFFFF;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    }
+    .btn-success {
+      background-color: #5BB75B;
+      background-image: -moz-linear-gradient(center top , #62C462, #51A351);
+      background-repeat: repeat-x;
+      border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+      color: #FFFFFF;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    }
+    .btn-inverse {
+      background-color: #363636;
+      background-image: -moz-linear-gradient(center top , #444444, #222222);
+      background-repeat: repeat-x;
+      border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+      color: #FFFFFF;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    }
+
+    .inp-large {
+      font-size: 100%;
+    }
+
+    small {
+      font-size: 90%;
+    }
+
+    fieldset {
+      margin: 0 auto 1em;
+      padding: 0.25em 0.5em 0.5em;
+      width: 86%;
+    }
+
+    legend {
+      font-family: sans-serif;
+      font-size: 50%;
+      line-height: 1;
+      padding: 0 0.2em;
+      visibility: hidden;
+    }
+
+    fieldset.visible {
+      border: 1px solid teal;
+    }
+      fieldset.visible legend {
+        visibility: visible;
+      }
+
+    .dim {
+      opacity: 0.5 !important;
+    }
+
+    .fader {
+      position: relative;
+    }
+
+    .ajax-loader {
+      background: url('img/ajax-loader.gif') 0 0 no-repeat;
+      display: inline-block;
+      margin-left: 15px;
+      vertical-align: middle;
+      height: 32px;
+      width: 32px;
+      visibility: hidden;
+    }
+    .ajax-loader.active {
+      visibility: visible;
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+
+  <div class="state-background"></div>
+  <div class="slides">
+
+    <section>
+      <h1>Webelement #12</h1>
+      <h3>Nepoznané funkcie jQuery</h3>
+      <p>
+        <a href="https://twitter.com/srigi">@srigi</a><br>
+        <img src="img/avatar.png" height="100" width="100">
+      </p>
+    </section>
+
+
+    <section>
+      <h3>Obsah</h3>
+      <ul>
+        <li><h4><a href="#/2">$.on</a></h4></li>
+        <li><h4><a href="#/6">$.proxy</a></h4></li>
+        <li><h4><a href="#/11">$.queue</a></h4></li>
+        <li><h4><a href="#/20">$.debounce/throttle</a></h4></li>
+        <li><h4><a href="#/27">$.Deferred</a></h4></li>
+      </ul>
+    </section>
+
+
+    <section data-state="on_1">
+      <h2>$.on</h2>
+      <p>Klasický každodenný click handler</p>
+      <pre><code>
+$('.btn.classic').click(function(ev) {
+  console.info(ev);
+});
+      </code></pre>
+
+      <fieldset class="add-group">
+        <legend>.add-group</legend>
+        <button class="btn btn-large btn-info classic">click me</button>
+      </fieldset>
+
+      <div class="fragment">
+        <button class="btn btn-large btn-success adder">adder</button>
+      </div>
+    </section>
+
+
+    <section>
+      <h2>$.on</h2>
+      <pre class="onslide3"><code>
+$('.btn.classic').live('click', function(ev) {
+  console.info(ev);
+});
+      </code></pre>
+
+      <p class="fragment"><em>Deprecated</em> od jQuery 1.7</p>
+
+      <pre class="fragment"><code>
+$('.btn.classic').on('click', function(ev) {
+  console.info(ev);
+});
+      </code></pre>
+    </section>
+
+
+    <section data-state="on_4">
+      <h2>$.on</h2>
+      <fieldset class="group">
+        <legend>.group</legend>
+        <button class="btn btn-large btn-success adder">adder</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+        <button class="btn btn-large btn-info modern">click me</button>
+      </fieldset>
+
+      <pre class="fragment"><code>
+$('.group').on('click', '.btn.modern', function(ev) {
+  console.info(ev);
+});
+      </code></pre>
+    </section>
+
+
+    <section>
+      <h2>$.on</h2>
+      <h4>užitočné zdroje</h4>
+      <ul>
+        <li><a href="http://www.elijahmanor.com/2012/02/differences-between-jquery-bind-vs-live.html">Differences Between jQuery .bind() vs .live() vs .delegate() vs .on() </a></li>
+      </ul>
+    </section>
+
+
+    <section>
+      <h3>Obsah</h3>
+      <ul>
+        <li><h4><a href="#/2" class="dim">$.on</a></h4></li>
+        <li><h4><a href="#/6">$.proxy</a></h4></li>
+        <li><h4><a href="#/11">$.queue</a></h4></li>
+        <li><h4><a href="#/20">$.debounce/throttle</a></h4></li>
+        <li><h4><a href="#/27">$.Deferred</a></h4></li>
+      </ul>
+    </section>
+
+
+    <section data-state="on_7">
+      <h2>$.proxy</h2>
+
+      <div class="fragment">
+        <pre><code>
+$(document).on('click', '.btn', function(ev) {
+  console.info(this);
+});
+        </code></pre>
+      </div>
+
+      <div class="fragment">
+        <button class="btn btn-large btn-info">click me</button>
+        <pre><code>
+var myObj = { foo:'bar', baz:function() {} };
+
+$(document).on('click', '.btn', $.proxy(function(ev) {
+  console.info(this);
+}, myObj));
+        </code></pre>
+      </div>
+    </section>
+
+
+    <section>
+      <h2>$.proxy</h2>
+      <h4>Malý event agregator</h4>
+
+      <pre><code>
+var vent = $({});
+var clovek = {
+  name : 'Jozko',
+  run  : function() {
+    console.info(this);
+    console.info('bezim');
+  }
+};
+
+vent.bind('potopa', $.proxy(clovek.run, clovek));
+vent.trigger('potopa');
+
+vent.unbind('potopa', clovek.run); // using original function ;)
+vent.trigger('potopa');
+      </code></pre>
+    </section>
+
+
+    <section>
+      <h2>$.proxy</h2>
+      <h4>užitočné zdroje</h4>
+      <ul>
+        <li><a href="http://www.bennadel.com/blog/2001-Using-jQuery-s-Proxy-Method-In-Event-Binding-And-Unbinding.htm">Using jQuery's Proxy() Method In Event Binding And Unbinding</a></li>
+        <li><a href="http://www.bennadel.com/blog/2298-Be-Careful-When-Using-The-jQuery-Proxy-Method-Outside-Of-A-jQuery-Context.htm">Be Careful When Using The jQuery Proxy() Method Outside Of A jQuery Context</a></li>
+      </ul>
+    </section>
+
+
+    <section>
+      <h3>Obsah</h3>
+      <ul>
+        <li><h4><a href="#/2" class="dim">$.on</a></h4></li>
+        <li><h4><a href="#/6" class="dim">$.proxy</a></h4></li>
+        <li><h4><a href="#/11">$.queue</a></h4></li>
+        <li><h4><a href="#/20">$.debounce/throttle</a></h4></li>
+        <li><h4><a href="#">$.Deferred</a></h4></li>
+      </ul>
+    </section>
+
+
+    <section data-state="on_11">
+      <h2>$.queue</h2>
+      <p>
+        Poznáte tento zlý škaredý vec? <small>nested as hell</small><br>
+        <button class="btn btn-large btn-info ugly">click me</button>
+      </p>
+
+      <pre><code>
+$(document).on('click', '.ugly', function(ev) {
+
+  $(this).animate({ width:'50%' }, 2000, function() {
+    $(this).removeClass('btn-info')
+           .addClass('btn-success')
+           .delay(1000)
+           .animate({ height:'200px' }, 2000, function() {
+             $(this).removeClass('btn-success')
+                    .addClass('btn-inverse')
+           });
+  });
+
+});
+      </code></pre>
+    </section>
+
+
+    <section>
+      <h2>$.queue</h2>
+      <p>callbacky do samostatných premenných</p>
+
+      <pre><code>
+var cb1 = function() {
+  $(this).removeClass('btn-info')
+         .addClass('btn-success')
+         .delay(1000)
+         .animate({height:'200px'}, 2000, cb2);
+  };
+
+var cb2 = function() {
+  $(this).removeClass('btn-success').addClass('btn-inverse')
+};
+
+$(document).on('click', '.ugly', function(ev) {
+  $(this).animate({ width:'50%'}, 2000, cb1);
+});
+      </code></pre>
+    </section>
+
+
+    <section>
+      <h2>$.queue</h2>
+      <p>samostatné funckcie pre jednotlivé úlohy</p>
+
+      <pre><code>
+var changeClass1 = function() {
+  $(this).removeClass('btn-info').addClass('btn-success');
+};
+
+var changeClass2 = function() {
+  $(this).removeClass('btn-success').addClass('btn-inverse');
+};
+
+var animate1 = function() {
+  $(this).animate({ width:'50%'}, 2000);
+};
+
+var animate2 = function() {
+  $(this).animate({ height:'200px' }, 2000);
+};
+
+$(document).on('click', '.btn', function(ev) {
+  animate1.call(this);
+});
+      </code></pre>
+    </section>
+
+
+    <section>
+      <h2>$.queue</h2>
+
+      <pre><code>
+var changeClass1 = function(next) {
+  $(this).removeClass('btn-info').addClass('btn-success');
+  next();
+};
+
+var changeClass2 = function(next) {
+  $(this).removeClass('btn-success').addClass('btn-inverse');
+  next();
+};
+
+$(document).on('click', '.ugly', function(ev) {
+  $(this).animate({ width:'50%' }, 2000)
+         .queue(changeClass1)
+         .delay(1000)
+         .animate({ height:'200px' }, 2000)
+         .queue(changeClass2);
+});
+      </code></pre>
+    </section>
+
+
+    <section>
+      <h2>$.queue</h2>
+
+      <pre><code>
+var doSomething = function(next) {
+  // wrk
+  next();
+};
+
+var doSomethingElse = function(next) {
+  // wrk
+  next();
+};
+
+$(someElement).queue(doSomething).queue(doSomethingElse);
+      </code></pre>
+    </section>
+
+
+    <section>
+      <h2>$.queue</h2>
+
+      <pre><code>
+$(this)
+  .delay(1000, "fader")
+  .queue("fader", function(next) {
+    $(this).animate({opacity:0}, { duration:1000, queue:false });
+    next();
+  })
+  .dequeue("fader")
+  .animate({ top:"-=40" }, { duration:2000 });
+      </code></pre>
+
+      <img class="fragment i1" src="img/queue01.png" height="290">
+      <img class="fragment i2" src="img/queue02.png" height="290">
+      <img class="fragment i3" src="img/queue03.png" height="290">
+      <img class="fragment i4" src="img/queue04.png" height="290">
+      <img class="fragment i5" src="img/queue05.png" height="290">
+      <img class="fragment i6" src="img/queue06.png" height="290">
+      <img class="fragment i7" src="img/queue07.png" height="290">
+      <img class="fragment i8" src="img/queue8.png" height="290">
+    </section>
+
+
+    <section data-state="on_17">
+      <h2>$.queue</h2>
+
+      <pre><code>
+$(this)
+  .delay(1000, "fader")
+  .queue("fader", function(next) {
+    $(this).animate({opacity:0}, { duration:1000, queue:false });
+    next();
+  })
+  .dequeue("fader")
+  .animate({ top:"-=40" }, { duration:2000 });
+      </code></pre>
+      <button class="btn btn-large btn-info fader">fader</button>
+    </section>
+
+
+    <section>
+      <h2>$.queue</h2>
+      <h4>užitočné zdroje</h4>
+      <ul>
+        <li><a href="http://www.bennadel.com/blog/1864-Experimenting-With-jQuery-s-Queue-And-Dequeue-Methods.htm">Experimenting With jQuery's Queue() And Dequeue() Methods</a></li>
+        <li><a href="http://cdmckay.org/blog/2010/06/22/how-to-use-custom-jquery-animation-queues/">How to use custom jQuery animation queues </a></li>
+      </ul>
+    </section>
+
+
+    <section>
+      <h3>Obsah</h3>
+      <ul>
+        <li><h4><a href="#/2" class="dim">$.on</a></h4></li>
+        <li><h4><a href="#/6" class="dim">$.proxy</a></h4></li>
+        <li><h4><a href="#/11" class="dim">$.queue</a></h4></li>
+        <li><h4><a href="#/20">$.debounce/throttle</a></h4></li>
+        <li><h4><a href="#">$.Deferred</a></h4></li>
+      </ul>
+    </section>
+
+
+    <section data-state="on_20">
+      <h2>$.debounce</h2>
+      <p>A tento zlý škaredý tiež poznáte?</p>
+
+      <input type="text" name="q" class="inp-large">
+      <pre><code>
+$(document).on('keydown', '[name="q"]', function(ev) {
+  $.ajax({
+    url: 'http://example.com/',
+    data: { q:$(this).val() },
+    success: function(response) {
+      console.info(response);
+    }
+  });
+});
+      </code></pre>
+    </section>
+
+
+    <section data-state="on_21">
+      <h2>$.debounce</h2>
+      <p>DIRTY HACK FTW!</p>
+
+      <input type="text" name="q" class="inp-large">
+      <pre><code>
+var timer;
+
+$(document).on('keydown', '[name="q"]', function(ev) {
+  if (timer) {
+    clearTimeout(timer);
+  }
+
+  timer = setTimeout($.proxy(function() {
+    $.ajax({
+      url: 'http://example.com/',
+      data: { q:$(this).val() },
+      success: function(response) {
+        console.info(response);
+      }
+    });
+  }, this), 1500);
+});
+      </code></pre>
+    </section>
+
+
+    <section data-state="on_22">
+      <h2>$.debounce</h2>
+
+      <input type="text" name="q" class="inp-large">
+      <pre><code>
+$(document).on('keydown', '[name="q"]', $.debounce(1500, function(ev) {
+  $.ajax({
+    url: 'http://example.com/',
+    data: { q:$(this).val() },
+    success: function(response) {
+      console.info(response);
+    }
+  });
+}));
+      </code></pre>
+      <img class="fragment" src="img/debounce1.png" style="width:90%;">
+      <img class="fragment" src="img/debounce2.png" style="width:90%;">
+    </section>
+
+
+    <section>
+      <h2>$.throttle</h2>
+
+      <iframe src="iframe1.html" style="border:1px solid teal; height:180px; padding:1px; width:90%;"></iframe>
+      <pre><code>
+$(window).on('scroll', function() {
+  console.info($(this).scrollTop());
+});
+      </code></pre>
+    </section>
+
+
+    <section>
+      <h2>$.throttle</h2>
+
+      <iframe src="iframe2.html" style="border:1px solid teal; height:180px; padding:1px; width:90%;"></iframe>
+      <pre><code>
+$(window).on('scroll', $.throttle(500, function() {
+  console.info($(this).scrollTop());
+}));
+      </code></pre>
+      <div class="fragment">
+        <img src="img/throttle1.png" style="width:90%;">
+        <img src="img/throttle2.png" style="width:90%;">
+      </div>
+    </section>
+
+
+    <section>
+      <h2>$.debounce/throttle</h2>
+      <h4>užitočné zdroje</h4>
+      <ul>
+        <li><a href="http://benalman.com/projects/jquery-throttle-debounce-plugin/">jQuery throttle / debounce: Sometimes, less is more!</a></li>
+      </ul>
+    </section>
+
+
+    <section>
+      <h3>Obsah</h3>
+      <ul>
+        <li><h4><a href="#/2" class="dim">$.on</a></h4></li>
+        <li><h4><a href="#/6" class="dim">$.proxy</a></h4></li>
+        <li><h4><a href="#/11" class="dim">$.queue</a></h4></li>
+        <li><h4><a href="#/20" class="dim">$.debounce/throttle</a></h4></li>
+        <li><h4><a href="#/27">$.Deferred</a></h4></li>
+      </ul>
+    </section>
+
+
+    <section>
+      <h2>$.Deferred</h2>
+      <p>ASYNC (UI) je dnes kľúčový pojem</p>
+
+      <pre class="fragment sync"><code>
+var position = navigator.geolocation.getCurrentPosition();
+      </code></pre>
+      <small class="fragment">takto fakt nie!</small>
+      <pre class="fragment async"><code>
+navigator.geolocation.getCurrentPosition(function(position) {
+  // do stuff with position
+});
+      </code></pre>
+      <pre class="fragment async"><code>
+getData(function(data) {
+  // do stuff with data
+});
+      </code></pre>
+    </section>
+
+
+    <section>
+      <h2>$.Deferred</h2>
+      <p>ASYNC error handling</p>
+
+      <pre class="fragment async"><code>
+navigator.geolocation.getCurrentPosition(function(position) {
+  // do stuff with position
+}, function(error) {
+  // do stuff with error
+});
+      </code></pre>
+    </section>
+
+
+    <section>
+      <h2>$.Deferred</h2>
+      <p><em>Messy</em> kód</p>
+
+      <pre><code>
+// first get data
+getData(function(data) {
+  // then get position
+  getCurrentPosition(function(position) {
+    // do stuff with data and position
+  }, function(error) {
+    // getLocation failed
+  });
+}, function(error) {
+  // getData failed
+});
+      </code></pre>
+    </section>
+
+
+    <section>
+      <h2>$.Deferred</h2>
+
+      <pre><code>
+var getData = function() {
+  var dfd = new $.Deferred();
+
+  actualGetData(function(data) {}, function(error) {});
+
+  return dfd.promise();
+};
+      </code></pre>
+    </section>
+
+
+    <section>
+      <h2>$.Deferred</h2>
+
+      <pre><code>
+var dataPromise = getData();
+
+dataPromise.done(function(data) {
+  // do stuff with data
+});
+
+dataPromise.done(function(data) {
+  // do stuff with data
+});
+
+dataPromise.fail(function(error) {
+  // do stuff with error
+});
+
+
+      </code></pre>
+    </section>
+
+
+    <section>
+      <h2>$.Deferred</h2>
+
+      <pre><code>
+var getData = function() {
+  var dfd = new $.Deferred();
+
+  actualGetData(function(data) {
+    dfd.resolve(data);
+  }, function(error) {
+    dfd.reject(error);
+  });
+
+  return dfd.promise();
+};
+      </code></pre>
+    </section>
+
+
+    <section>
+      <h2>$.Deferred</h2>
+
+      <pre><code>
+var ajaxPromise = $.ajax({
+  url: 'http://example.com',
+  data: { foo:'bar' }
+});
+
+ajaxPromise.always(function(response) {
+  hideAjaxLoader();
+});
+
+ajaxPromise.done(function(response) {
+  // do stuff with response
+});
+
+ajaxPromise.fail(function(error) {
+  // do stuff with error
+});
+      </code></pre>
+    </section>
+
+
+    <section data-state="on_34">
+      <h2>$.Deferred</h2>
+
+      <pre><code>
+$ajaxLoader.addClass('active');
+$.when(getData(), $.ajax('http://localhost/somepage.html')).then(
+  function(data, somePage) {
+    console.info(data, somePage);
+  },
+  function(error) {
+    console.info(error);
+  }
+).always(function() {
+  $ajaxLoader.removeClass('active');
+});
+      </code></pre>
+
+      <div class="ifragment">
+        <button class="btn btn-large btn-info run-dfd">fire!</button>
+        <span class="ajax-loader"></span>
+      </div>
+    </section>
+
+
+    <section>
+      <h2>$.debounce/throttle</h2>
+      <h4>užitočné zdroje</h4>
+      <ul>
+        <li><a href="http://api.jquery.com/category/deferred-object/">Deferred Object</a></li>
+        <li><a href="http://www.html5rocks.com/en/tutorials/async/deferred/">Asynch JS: The Power Of $.Deferred</a></li>
+        <li><a href="http://net.tutsplus.com/tutorials/javascript-ajax/wrangle-async-tasks-with-jquery-promises/">Wrangle Async Tasks With JQuery Promises</a></li>
+      </ul>
+    </section>
+
+
+    <section>
+      <h2>Ďakujem</h2>
+      <p>
+        <a href="https://twitter.com/srigi">@srigi</a><br>
+        <img src="img/avatar.png" height="100" width="100">
+      </p>
+      <h4>otázky...</h4>
+    </section>
+
+
+    <section>
+      <h2>A ešte...</h2>
+      <p>Prvých 20 geekov dostane na bare pivo ak povie heslo <span class="lol">*********</span></p>
+      <p class="fragment">WEBELEMENT12</p>
+    </section>
+  </div><!-- .slides -->
+</div><!-- .reveal -->
+
+<script src="js/libs/jquery-1.8.2.min.js"></script>
+<script src="js/plugins/jquery.throttle-debounce-1.1.min.js"></script>
+<script src="js/libs/head.min.js"></script>
+<script src="js/libs/reveal.min.js"></script>
+<script>
+
+  Reveal.initialize({
+    history       : true,
+    theme         : 'reveal-beige',
+    transition    : 'default',
+    dependencies  : [ { src: 'js/libs/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } } ]
+  });
+
+  var counter1 = 0;
+  var counter2 = 0;
+
+
+  // slides code
+
+  Reveal.addEventListener('on_1', function() {
+    $('.btn.classic').on('click', function(ev) { console.info(ev); });
+    $('.btn.adder').on('click', function(ev) { $('.add-group').append('<button class="btn btn-large btn-info classic">click me</button>'); });
+  });
+
+  Reveal.addEventListener('on_4', function() {
+    $('.group').on('click', '.btn.modern', function(ev) { console.info(ev); });
+    $('.group').on('click', '.btn.adder', function(ev) { $('.group').append('<button class="btn btn-large btn-info modern">click me</button>'); });
+  });
+
+  Reveal.addEventListener('on_7', function() {
+    var myObj = { foo:'bar', baz:function() {} };
+
+    $('.btn').off('click'); // unbind handlers from prev slides
+    $(document).on('click', '.btn', $.proxy(function(ev) {
+      console.info(this);
+    }, myObj));
+  });
+
+  Reveal.addEventListener('on_11', function() {
+    $(document).on('click', '.ugly', function(ev) {
+
+      $(this).animate({ width:'50%' }, 2000, function() {
+        $(this).removeClass('btn-info')
+            .addClass('btn-success')
+            .delay(1000)
+            .animate({ height:'200px' }, 2000, function() {
+              $(this).removeClass('btn-success')
+                  .addClass('btn-inverse')
+            });
+      });
+
+    });
+  });
+
+  Reveal.addEventListener('on_17', function() {
+    $(document).on('click', '.fader', function(ev) {
+
+      $(this)
+        .delay(1000, "fader")
+        .queue("fader", function(next) {
+          $(this).animate({opacity:0}, { duration:1000, queue:false });
+          next();
+        })
+        .dequeue("fader")
+        .animate({ top:"-=40" }, { duration:2000 })
+
+    });
+  });
+
+  Reveal.addEventListener('on_20', function() {
+    $(document).on('keydown', '[name="q"]', function(ev) {
+      $.ajax({
+        url: 'http://example.com/',
+        data: { q:$(this).val() },
+        success: function(response) {
+          console.info(response);
+        }
+      });
+    });
+  });
+
+  Reveal.addEventListener('on_21', function() {
+    var timer;
+
+    $(document).off('keydown');
+    $(document).on('keydown', '[name="q"]', function(ev) {
+      if (timer) {
+        clearTimeout(timer);
+      }
+
+      timer = setTimeout($.proxy(function() {
+        $.ajax({
+          url: 'http://example.com/',
+          data: { q:$(this).val() },
+          success: function(response) {
+            console.info(response);
+          }
+        });
+      }, this), 1500);
+
+    });
+  });
+
+  Reveal.addEventListener('on_22', function() {
+    $(document).off('keydown');
+    $(document).on('keydown', '[name="q"]', $.debounce(1500, function(ev) {
+      $.ajax({
+        url: 'http://example.com/',
+        data: { q:$(this).val() },
+        success: function(response) {
+          console.info(response);
+        }
+      });
+    }));
+  });
+
+  Reveal.addEventListener('on_34', function() {
+    var $btn = $('.btn.run-dfd');
+    var $ajaxLoader = $('.ajax-loader');
+    var getData = function() {
+      var dfd = new $.Deferred();
+      var ajaxPromise = $.ajax({ url:'http://localhost/getData.php', dataType:'json' });
+
+      ajaxPromise.done(function(response) {
+        dfd.resolve(response);
+      })
+
+      ajaxPromise.fail(function(error) {
+        dfd.reject(error);
+      })
+
+      return dfd.promise();
+    };
+
+    $(document).on('click', $btn, function() {
+      $ajaxLoader.addClass('active');
+
+      $.when(getData(), $.ajax('http://localhost/somepage.html')).then(
+          function(data, somePage) {
+            console.info(data, somePage);
+          },
+          function(error) {
+            console.info(error);
+          }
+      ).always(function() {
+        $ajaxLoader.removeClass('active');
+      });
+    });
+  });
+
+
+
+  // fragments code
+
+  Reveal.addEventListener('fragmentshown', function(ev) {
+    var slideNum = Reveal.getIndices().h;
+
+    if (slideNum == 2) {
+      $('.add-group').addClass('visible');
+    }
+
+    if (slideNum == 3) {
+      $('.onslide3').addClass('dim');
+    }
+
+    if (slideNum == 4) {
+      $('.group').addClass('visible');
+    }
+
+    if (slideNum == 16) {
+      $('.i' + counter1).hide();
+      counter1++;
+    }
+
+    if (slideNum == 27) {
+      counter2++;
+      if (2 == counter2) {
+        $('.sync').addClass('dim');
+      }
+    }
+
+    if (slideNum == 37) {
+      $('.lol').hide()
+    }
+
+  });
+
+</script>
+
+</body>
+</html>
