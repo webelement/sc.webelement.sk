@@ -1,0 +1,4 @@
+
+guard :livereload, :api_version => '1.6', :port => '35729', :apply_js_live => false do
+  watch(%r{.+\.(html|css|js)})
+end

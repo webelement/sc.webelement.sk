@@ -1,0 +1,395 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="theme/css/phone.css">
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="js/slides" src="js/require-1.0.8.min.js"></script>
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="logoslide nobackground">
+    <article class="flexbox vcenter">
+      <span><img src="images/google_developers_logo.png"></span>
+    </article>
+  </slide>
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/webelement_icon_128.png"></aside>
+    <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Starter kit</h2>
+    </hgroup>
+    <article>
+      <p>List of things you should take into the wild:</p>
+      <ul class="build fade">
+        <li>latest Google Chrome stable</li>
+        <li>latest Google Chrome Canary release</li>
+        <li>chrome://flags (chrome://about)</li>
+        <ul>
+          <li>experimental devtools</li>
+          <li>smooth scroll</li>
+          <li>password generation</li>
+          <li>stacked tabs</li>
+        </ul>
+        <li>devtools settings</li>
+        <li>keyboard shortcuts</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Settings</h2>
+    </hgroup>
+    <article>
+      <ul class="fade">
+        <li>dock to right (where did it go?)</li>
+        <li>color format</li>
+        <li>paint rectangles (explained)</li>
+        <li>disabled cache</li>
+        <li>XHR logging</li>
+        <li>FPS meter (for bigger JS apps)</li>
+      </ul>
+      <p>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/webelement_icon_128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>DevTools</h2>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <aside class="note">
+      <section>
+        <ul>
+          <li><a href="https://developers.google.com/chrome-developer-tools/docs/elements">Elements tab docs</a></li>
+          <li><a href="http://www.youtube.com/watch?v=2Sq9EZFjgiQ">clicking, double clicking... reference</a></li>
+        </ul>
+      </section>
+    </aside>
+    <hgroup>
+      <h2>Inspect element</h2>
+    </hgroup>
+    <article style="margin-top:30px;">
+      <ul>
+        <li>clicking, double clicking, <em>drag &amp; drop</em>, right clicking</li>
+        <li>always available console</li>
+        <li>$0 for active element</li>
+        <li id="deleteme"><em>break on node removal</em> - <button onclick="elem = document.getElementById('deleteme'); elem.parentNode.removeChild(elem);"> delete me</button></li>
+      </ul>
+      <pre class="prettyprint" data-lang="javascript">//set the on element change listener and try to remove the element
+document.getElementById('deleteme'); elem.parentNode.removeChild(elem);</pre>
+    </article>
+    <hgroup>
+      <h2>Styles and Metrics</h2>
+    </hgroup>
+    <article style="margin-top:30px;">
+      <ul>
+        <li>color picker</li>
+        <li>SHIFT+{arrow}, ALT+{arrow}, SHIFT+{pgup/pgdn}, </li>
+        <li>metrics board</li>
+        <li>event listeners</li>
+      </ul>
+    </article>
+  </slide>
+
+    <slide>
+    <aside class="note">
+      <section>
+        <ul>
+          <li><a href="https://developers.google.com/chrome-developer-tools/docs/resources">Resources tab docs</a></li>
+          <li><a href="https://developers.google.com/chrome-developer-tools/docs/scripts">Scripts tab docs</a></li>
+          <li><a href="https://chrome.google.com/webstore/detail/web-developer/bfbameneiokkgbdmiekhjnmfkcnldhhm">Chrome web developer panel extension</a></li>
+        </ul>
+      </section>
+    </aside>
+    <hgroup>
+      <h2>Resources / Scripts</h2>
+    </hgroup>
+    <article>
+      <ul class="fade">
+        <li>resources mostly for cookies (not editable, use extension)</li>
+        <li>pretty print</li>
+        <li>IDE-like shortcuts (CTRL+O, CTRL+SHIFT+O)</li>
+        <li>CTRL+SHIFT+F for searching in all resources</li>
+        <li>manual breakpoints, event breakpoints, debugger, watches</li>
+      </ul>
+      <p>Place your onClick event breakpoint and press <button id="preview-debug">preview debug</button>.</p>
+      <script type="text/javascript">
+      document.getElementById('preview-debug').onclick = previewDebug;
+
+      function previewDebug() {
+          var i=0;
+          i++;
+          i+=5;
+          console.log(--i);
+        }
+      </script>
+    </article>
+
+    <pre class="prettyprint" data-lang="javascript"><b>document.getElementById('preview-debug').onclick = previewDebug;
+
+function previewDebug() {</b>
+  var i=0;
+  i++;
+  i+=5;
+  console.log(--i);
+}</pre>
+  </slide>
+
+  <slide>
+    <aside class="note">
+      <section>
+        <ul>
+          <li><a href="https://developers.google.com/chrome-developer-tools/docs/network">Network tab docs</a></li>
+          <li><a href="http://www.softwareishard.com/blog/har-adopters/">HAR adopters</a></li>
+          <li><a href="http://ericduran.github.com/chromeHAR/">HAR devtools-like reader</a></li>
+        </ul>
+      </section>
+    </aside>
+    <hgroup>
+      <h2>Network timeline</h2>
+      <h3>.. or to know how to read it properly</h3>
+    </hgroup>
+    <article style="margin-top:30px;">
+      <img style="float:right" src="images/screenshots/har.png" alt="HAR reader" title="HAR reader" height=420 />
+      <ul style="float:left;width:280px;">
+        <li>stats and filters</li>
+        <li>initiator, data transfered vs. content size</li>
+        <li>graph ordering</li>
+        <li>HAR exports</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/webelement_icon_128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Chrome extensions</h2>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <aside class="note">
+      <section>
+        <ul>
+          <li><a href="https://developers.google.com/speed/pagespeed/">Google PageSpeed service home</a></li>
+          <li><a href="https://chrome.google.com/webstore/detail/pagespeed-insights-by-goo/gplegfbjlmmehdoakndmohflojccocli">PageSpeed extension</a></li>
+        </ul>
+      </section>
+    </aside>
+    <hgroup>
+      <h2>Audits</h2>
+    </hgroup>
+    <article style="margin-top:30px;">
+      <img src="images/screenshots/pagespeed.png" alt="Performance audit" title="Performance audit" style="float:right;" height=430 />
+      <ul style="float:left;">
+        <li>caching</li>
+        <li>stylesheet placement</li>
+        <li>unused CSS rules</li>
+      </ul>
+    </article>
+    <hgroup>
+      <h2>Pagespeed</h2>
+    </hgroup>
+    <article style="margin-top:30px;">
+      <ul style="float:left;">
+        <li>service provided by Google</li>
+        <li>caching</li>
+        <li>stylesheet placement</li>
+        <li>unused CSS rules</li>
+        <li>not just advising</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <aside class="note">
+      <section>
+        <ul>
+          <li><a href="https://github.com/dejan/rails_panel">RailsPanel source</a></li>
+          <li><a href="http://railscasts.com/episodes/402-better-errors-railspanel?view=asciicast">RailsPanel railscast</a></li>
+        </ul>
+      </section>
+    </aside>
+    <hgroup>
+      <h2>Rails panel</h2>
+    </hgroup>
+    <article>
+      <ul style="float:left;">
+        <li>request params</li>
+        <li>view render time</li>
+        <li>DB access time</li>
+      </ul>
+    </article>
+    <img src="images/screenshots/railspanel.png" alt="PHP Console" title="PHP Console" style="float:right" height=470 />
+  </slide>
+
+  <slide>
+    <aside class="note">
+      <section>
+        <ul>
+          <li><a href="https://chrome.google.com/webstore/detail/php-console/nfhmhhlpfleoednkpnnnkolmclajemef/details">Chrome extension</a></li>
+          <li><a href="http://www.yiiframework.com/extension/php-console">Yii extenson</a></li>
+          <li><a href="https://code.google.com/p/php-console/">Google Code project website</a></li>
+        </ul>
+      </section>
+    </aside>
+    <hgroup>
+      <h2>PHP console</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>displaying notices, errors, exceptions and JS errors directly in Chrome</li>
+        <li>simple configuration</li>
+        <li>Wordpress and Yii extensions</li>
+      </ul>
+    </article>
+    <img src="images/screenshots/phpconsole.png" alt="PHP Console" title="PHP Console"height=370 />
+  </slide>
+
+  <slide>
+    <aside class="note">
+      <section>
+        <ul>
+          <li><a href="https://bitbucket.org/ryanackley/tincr">Tincr source</a></li>
+          <li><a href="http://tin.cr/docs.html">Tincr documentation</a></li>
+          <li><a href="https://github.com/NV/chrome-devtools-autosave">Chrome DevTools source</a></li>
+        </ul>
+      </section>
+    </aside>
+    <hgroup>
+      <h2>Autosave extensions</h2>
+    </hgroup>
+    <article>
+      <ul>
+        <li>Tincr</li>
+          <ul>
+            <li>easy to install and use</li>
+            <li>not for advanced use</li>
+            <li>support for generic web server, Rails projects...</li>
+            <li>custom routing via configuration file (see docs)</li>
+          </ul>
+        <li>Chrome devtools autosave (client, server)</li>
+          <ul>
+            <li>needs server installed</li>
+            <li>advanced configuration</li>
+            <li>once configured, pleasure to use</li>   
+          </ul>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Custom color scheme</h2>
+      <h3>color your devtools the way you like</h3>
+    </hgroup>
+    <article>
+      <p>Google for <code>Custom.css</code> files for DevTools and place them here:
+      <ul>
+        <li>Mac OSX: <code>~/Library/Application Support/Google/Chrome/Default/User StyleSheets/Custom.css</code></li>
+        <li>Windows: <code>~/AppData/Local/Google/Chrome/User Data/Default/User StyleSheets/Custom.css</code></li>
+        <li>Ubuntu: <code>~/.config/chromium/Default/User StyleSheets/Custom.css</code></li>
+      </ul>
+    </article>
+    <p>Remember: DevTools is "just" the webapp</p>
+  </slide>
+
+  <slide class="fill nobackground" style="background-image: url(images/look_at_all_the_meme.jpg)">
+    <hgroup>
+      <h2 style="color: #E2F131;-webkit-text-stroke-width: 1.3px;-webkit-text-stroke-color: black;">Timeline and Profiles - maybe another time...</h2>
+    </hgroup>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/webelement_icon_128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>Remote debugging</h2>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <aside class="note">
+      <section>
+        <ul>
+          <li><a href="https://developers.google.com/chrome-developer-tools/docs/remote-debugging">Remote debugging documentation</a></li>
+        </ul>
+      </section>
+    </aside>
+    <hgroup>
+      <h2>Setting up debugger</h2>
+    </hgroup>
+    <article>
+      <hgroup>
+        <h3>Debugee instance</h3>
+      </hgroup>
+      <ul>
+        <li>install android SDK tools</li>
+        <li>turn on USB debugging / remote debugging</li>
+        <li>turn on chrome with remote debugging on</li>
+        <li>open localhost:9222</li>
+      </ul>
+       <pre class="prettyprint" data-lang="CLI"># turn on adb port forwarding from android device
+$> adb forward tcp:9222 localabstract:chrome_devtools_remote
+
+# turn on chrome with remote debugger available
+$> chrome.exe --remote-debugging-port=9222</pre>
+      <h3>#DEMO</h3>
+    </article>
+  </slide>
+
+  <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/chrome_developers_icon_128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>&lt;BEER TIME!&gt;</h2>
+      <br/>
+      <p>slides available @ <a style="color:yellow" href="http://devtools.rootpd.com">devtools.rootpd.com</a><br/>
+        <span style="font-size:0.6em">note: try to press "p" for external links at each slide</span></p>
+    </article>
+    <p class="auto-fadein" data-config-contact>
+      <!-- populated from slide_config.json -->
+    </p>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
