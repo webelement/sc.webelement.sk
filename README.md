@@ -1,3 +1,3 @@
-# sc.webelement.sk
+# slides.webelement.sk
 
-Backup
+If someone had own slides and we need to host them.
