@@ -1,0 +1,13 @@
+version: "2"
+
+services:
+
+  app:
+    build: .
+    image: webelement/webelement-slides
+    volumes:
+      - ./_build:/usr/share/nginx/html
+      - ./docker/nginx/dev.conf:/etc/nginx/conf.d/default.conf
+    tty: true
+    ports:
+      - "8080:80"
