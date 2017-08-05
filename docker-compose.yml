@@ -2,12 +2,13 @@ version: "2"
 
 services:
 
-  app:
-    build: .
-    image: webelement/webelement-slides
+  deploy:
+    image: quay.io/rekurzia/aws-cli-docker
     volumes:
-      - ./_build:/usr/share/nginx/html
-      - ./docker/nginx/dev.conf:/etc/nginx/conf.d/default.conf
+      - ./:/code
     tty: true
-    ports:
-      - "8080:80"
+    working_dir: /code
+    environment:
+     - AWS_ACCESS_KEY_ID
+     - AWS_SECRET_ACCESS_KEY
+    command: s3 cp src s3://slides.webelement.sk --recursive --acl public-read --region eu-central-1
